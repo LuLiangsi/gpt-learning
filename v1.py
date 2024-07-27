@@ -5,7 +5,6 @@ import time
 torch.manual_seed(1337)
 
 
-
 batch_size = 32 #parallel
 block_size = 8
 max_iter = 3000

@@ -211,7 +211,7 @@ for iter in range(max_iters):
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
 print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
 
-# 111
+
 
 end_time = time.time()
 print(f"用时：{(end_time-start_time):.2f}秒")

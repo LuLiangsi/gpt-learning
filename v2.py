@@ -57,7 +57,7 @@ def estimate_loss():
     return out
 
 class Head(nn.Module):
-
+    # head size means that how many things we want to focus on
     def __init__(self, head_size):
         super().__init__()
         self.key = nn.Linear(n_embd, head_size, bias=False)
@@ -150,6 +150,8 @@ class GPTLanguageModel(nn.Module):
             torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
 
     def forward(self, idx, targets=None):
+        # idx are what we have, targets are what we want to predict
+        # if there are no target, means we are in the generation mode, we don't need to calculate the loss
         B, T = idx.shape
 
         tok_emb = self.token_embedding_table(idx)
@@ -170,16 +172,18 @@ class GPTLanguageModel(nn.Module):
         return logits, loss
     
     def generate(self, idx, max_new_tokens):
+        # size of idx is (B, T), T is the length of the sequence, B is the batch size.
         for _ in range(max_new_tokens):
             idx_cond = idx[:, -block_size:]
             # get the predictions
-            logits, loss = self(idx_cond)
-            # focus only on the last time step
+            logits, loss = self(idx_cond) # processed by forward
+            # focus only on the last time step, because the last element the model output is the prediction of the next token of the whole sequence, as how we train the model
             logits = logits[:, -1, :] #take the last row of Token, become (B, C)
             # apply softmax to get probabilites
             probs = F.softmax(logits, dim=-1)
             # sample form the distribution
             idx_next = torch.multinomial(probs, num_samples=1) #(B, 1)
+            # we can got the new token by decode the idx_next
             # append sampled index to the running sequence
             idx = torch.cat((idx, idx_next), dim =1)# (B, T+1)
         return idx

@@ -1,4 +1,4 @@
-from v2_1 import *
+from v1_3 import *
 import sys
 
 
@@ -14,8 +14,10 @@ n_head = 8
 n_layer = 6
 dropout = 0.1
 
+path = os.path.dirname(os.path.abspath(__file__))
+
 model = GPT(n_embd, n_head, n_layer, block_size, vocab_size, dropout, device).to(device)
-model.load_state_dict(torch.load('gpt_12000.params', map_location=device))
+model.load_state_dict(torch.load(path+'/gpt_12000.params', map_location=device))
 
 model.eval()
 while True:

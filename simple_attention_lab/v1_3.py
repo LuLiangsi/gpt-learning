@@ -3,12 +3,14 @@ import torch.nn as nn
 from torch.nn import functional as F
 import time
 import sys
+import os
 
 
 torch.manual_seed(1337)
 
-# read it in to inspect it
-with open('threebody.txt', 'r', encoding='utf-8') as f:
+path = os.path.dirname(os.path.abspath(__file__))
+
+with open(path+'/threebody.txt', 'r', encoding='utf-8') as f:
     text = f.read()
 
 chars = sorted(list(set(text)))
@@ -191,5 +193,5 @@ def train():
                 it_begin = time.time()
             
         if epoch % out_interval == 0:
-            torch.save(model.state_dict(), f'gpt_{epoch}.params')
+            torch.save(model.state_dict(), path+f'/gpt_{epoch}.params')
 

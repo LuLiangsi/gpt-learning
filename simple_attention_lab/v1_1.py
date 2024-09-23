@@ -14,7 +14,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 eval_interval = 200
 
 # read it in to inspect it
-with open('input.txt', 'r', encoding='utf-8') as f:
+with open('threebody.txt', 'r', encoding='utf-8') as f:
     text = f.read()
 
 chars = sorted(list(set(text)))

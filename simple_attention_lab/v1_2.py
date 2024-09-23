@@ -18,7 +18,7 @@ dropout = 0.2
 torch.manual_seed(1337)
 
 # read it in to inspect it
-with open('input.txt', 'r', encoding='utf-8') as f:
+with open('threebody.txt', 'r', encoding='utf-8') as f:
     text = f.read()
 
 chars = sorted(list(set(text)))

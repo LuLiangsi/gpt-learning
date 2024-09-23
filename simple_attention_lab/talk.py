@@ -24,7 +24,6 @@ while True:
     inp = input('You >>> ')
     if inp == 'e':
         break
-    inp = '“' + inp + '”\n'
     context = torch.tensor([encode(inp)]).to(device)
     next_text = context
 
